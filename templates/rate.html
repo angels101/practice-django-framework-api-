@@ -1,0 +1,61 @@
+{%load bootstrap4%}
+{%load static%}
+{% block content %}
+
+<form id="questions" >
+  <div class="row">
+      <div class="col-md-6">
+          Design.
+      </div>
+      <div class="col-md-6">
+          <input type="radio" name="rate1" id="terrible" checked="checked" value="terrible">0.1%
+          <input type="radio" name="rate1" id="poor" value="poor">20%
+          <input type="radio" name="rate1" id="average" value="average">50%
+          <input type="radio" name="rate1" id="very good" value="very good">80%
+          <input type="radio" name="rate1" id="excellent" value="excellent">100%
+      </div>
+  </div>
+  <br>
+  <div class="row">
+      </br>
+      <div class="col-md-6">
+          Usability.
+      </div>
+      <div class="col-md-6">
+          <input type="radio" name="rate2" id="terrible" checked="checked" value="terrible">0.1%
+          <input type="radio" name="rate2" id="poor" value="poor">20%
+          <input type="radio" name="rate2" id="average" value="average">50%
+          <input type="radio" name="rate2" id="very good" value="very good">80%
+          <input type="radio" name="rate2" id="excellent" value="excellent">100%
+      </div>
+  </div>
+  <br>
+  <div class="row">
+      </br>
+      <div class="col-md-6">
+          creativity.
+      </div>
+      <div class="col-md-6">
+          <input type="radio" name="rate3" id="terrible" checked="checked" value="terrible">0.1%
+          <input type="radio" name="rate3" id="poor" value="poor">20%
+          <input type="radio" name="rate3" id="average" value="average">50%
+          <input type="radio" name="rate3" id="very good" value="very good">80%
+          <input type="radio" name="rate3" id="excellent" value="excellent">100%
+      </div>
+  </div>
+  <br>
+  <button  type="submit" id="vote-btn" name="reset_form" value="Reset Form" onclick="this.form.reset();"> rate</button>
+</form>
+</div>
+</div>
+<div id="divhidden" style="display: none;">
+<div class="col-md-8">
+  <form action="" method="POST" enctype="multipart/form-data" id="ratingform">
+    {% csrf_token %}
+    {% bootstrap_form rateform %}
+    <input type="submit" class="btn btn-outline-success" value="Upload">
+</form>
+
+
+
+{% endblock %}
