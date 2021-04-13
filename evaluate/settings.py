@@ -16,6 +16,11 @@ import dj_database_url
 from decouple import config,Csv
 from pathlib import Path
 
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", __file__)
+import django
+django.setup()
+
 #MODE=config("MODE", default="dev")
 #SECRET_KEY = config('SECRET_KEY')
 #DEBUG = config('DEBUG', default=False, cast=bool)
