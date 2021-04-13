@@ -4,3 +4,4 @@ from .models import *
 admin.site.register(User_profile)
 admin.site.register(Projects)
 admin.site.register(Review)
+
