@@ -5,6 +5,170 @@ import datetime as dt
 
 # Create your models here.
 
+class Location(models.Model):
+    country = models.CharField(max_length=50, null=True)
+    state = models.CharField(max_length=50, null=True)
+    zipcode = models.IntegerField(null=True)
+    address = models.IntegerField(null=True)
+
+    def __str__(self):
+        return self.country
+
+class Followers(models.Model):
+    follower = models.ForeignKey(User, related_name='followers', null=True,on_delete=models.CASCADE)
+    following = models.ForeignKey(User, related_name='following', null=True,on_delete=models.CASCADE)
+    followed_on = models.DateTimeField(auto_now_add=True)
+
+    def follow_user(self, current_user, user_other):
+        self.following = user_other
+        self.follower = current_user
+        self.save()
+
+    def unfollow_user(self, user):
+        fol = self.objects.get(follower=user)
+        fol.delete()
+
+    def __str__(self):
+        return f'{self.follower.username} is now following {self.following.username}'
+
+class Rating(models.Model):
+    user = models.ForeignKey(User, related_name='ratings', null=True,on_delete=models.CASCADE)
+#    post = models.ForeignKey(Post, related_name='ratings', null=True,on_delete=models.CASCADE)
+    post_date = models.DateTimeField(auto_now_add=True, null=True)
+    usability = models.FloatField(default=0.00, null=True)
+    design = models.FloatField(default=0.00, null=True)
+    creativity = models.FloatField(default=0.00, null=True)
+    content = models.FloatField(default=0.00, null=True)
+    mobile = models.FloatField(default=0.00, null=True)
+
+    @property
+    def average_judge_rating(self, null=True):
+        rated = [i for i in [self.usability, self.design,
+                             self.creativity, self.content, self.mobile] if i != None]
+        if len(rated) == 0:
+            return 0.00
+        else:
+            rating = sum(rated[0:len(rated)])/len(rated)
+            return math.floor(rating * 100)/100.0
+
+    @classmethod
+    def average_usability(cls, post):
+        post_ratings = Rating.objects.filter(post=post)
+        _all = [ur.usability for ur in post_ratings]
+        if len(_all) == 0:
+            return 0.00
+        else:
+            average = sum(_all)/len(_all)
+            return math.floor(average * 100)/100.0
+
+    @property
+    def av_usability(self):
+        post_ratings = Rating.objects.filter(post=self.post)
+        _all = [ur.usability for ur in post_ratings]
+        if len(_all) == 0:
+            return 0.00
+        else:
+            average = sum(_all)/len(_all)
+            return math.floor(average * 10)/10.0
+
+    @classmethod
+    def average_design(cls, post):
+        post_ratings = cls.objects.filter(post=post)
+        _all = [ur.design for ur in post_ratings]
+        if len(_all) == 0:
+            return 0.00
+        else:
+            average = sum(_all)/len(_all)
+            return math.floor(average * 100)/100.0
+
+    @property
+    def av_design(self):
+        post_ratings = Rating.objects.filter(post=self.post)
+        _all = [ur.design for ur in post_ratings]
+        if len(_all) == 0:
+            return 0.00
+        else:
+            average = sum(_all)/len(_all)
+            return math.floor(average * 10)/10.0
+
+    @classmethod
+    def average_creativity(cls, post):
+        post_ratings = cls.objects.filter(post=post)
+        _all = [ur.creativity for ur in post_ratings]
+        if len(_all) == 0:
+            return 0.00
+        else:
+            average = sum(_all)/len(_all)
+            return math.floor(average * 100)/100.0
+
+    @property
+    def av_creativity(self):
+        post_ratings = Rating.objects.filter(post=self.post)
+        _all = [ur.creativity for ur in post_ratings]
+        if len(_all) == 0:
+            return 0.00
+        else:
+            average = sum(_all)/len(_all)
+            return math.floor(average * 10)/10.0
+
+    @classmethod
+    def average_content(cls, post):
+        post_ratings = cls.objects.filter(post=post)
+        _all = [ur.content for ur in post_ratings]
+        if len(_all) == 0:
+            return 0.00
+        else:
+            average = sum(_all)/len(_all)
+            return math.floor(average * 100)/100.0
+
+    @property
+    def av_content(self):
+        post_ratings = Rating.objects.filter(post=self.post)
+        _all = [ur.content for ur in post_ratings]
+        if len(_all) == 0:
+            return 0.00
+        else:
+            average = sum(_all)/len(_all)
+            return math.floor(average * 10)/10.0
+
+    @classmethod
+    def average_mobile(cls, post):
+        post_ratings = cls.objects.filter(post=post)
+        _all = [ur.mobile for ur in post_ratings]
+        if len(_all) == 0:
+            return 0.00
+        else:
+            average = sum(_all)/len(_all)
+            return math.floor(average * 100)/100.0
+
+    @property
+    def av_mobile(self):
+        post_ratings = Rating.objects.filter(post=self.post)
+        _all = [ur.mobile for ur in post_ratings]
+        if len(_all) == 0:
+            return 0.00
+        else:
+            average = sum(_all)/len(_all)
+            return math.floor(average * 10)/10.0
+
+    @classmethod
+    def average_rating(cls, post):
+        post_ratings = cls.objects.filter(post=post)
+        _all = [ur.average_judge_rating for ur in post_ratings]
+        if len(_all) == 0:
+            return 0.00
+        else:
+            average = sum(_all)/len(_all)
+            return math.floor(average * 100)/100.0
+
+    @property
+    def get_last_post(self):
+        return Rating.objects.last()
+
+
+
+
+
 class User_profile(models.Model):
     """
     class that creates an instance of a user profile
