@@ -1,12 +1,12 @@
 from django import forms
-#from .models import Post,Review,Profile,Rating, RATE_CHOICES
+from .models import Post,Review,Profile,Rating, RATE_CHOICES
 from django.contrib.auth.models import User
 
 
-# class UploadForm(forms.ModelForm):
-#     class Meta:
-#         model = Rating
-#         fields = ('design','usability','content')
+ class UploadForm(forms.ModelForm):
+     class Meta:
+        model = Rating
+        fields = ('design','usability','content')
 
 class RateForm(forms.ModelForm):
     review = forms.CharField(widget=forms.Textarea)

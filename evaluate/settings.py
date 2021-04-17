@@ -39,7 +39,7 @@ SECRET_KEY =config('SECRET_KEY')
 MODE=config("MODE", default="dev")
 #SECRET_KEY = os.environ.get('SECRET_KEY')
 #
-#DEBUG =config('DEBUG', default=False, cast=bool)
+DEBUG =config('DEBUG', default=False, cast=bool)
 ## development
 if config('MODE')=="dev":
 #if os.environ.get('DATABASE_URL'):
@@ -73,7 +73,7 @@ else:
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-lol@)@7=srza_6!6-e-y#f#@z!$eg1du9y4mbrjcr^qu(vjfy0'
+SECRET_KEY = 'django-insecure-lol@)@7=srza_6!6-e-y#f#@z!$eg1du9y4mbrjcr^qu(vjfy0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -93,11 +93,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'awards.apps.AwardsConfig',
-    'bootstrap3',
+    'bootstrap4',
     'psycopg2',
     #'mapbox_location_field',
-    'django_registration',
-    'pyuploadcare.dj'
+    'registration',
+    'pyuploadcare.dj',
+    'crispy_forms',
 ]
 
 
@@ -187,18 +188,19 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-#STATIC_ROOT=os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT=os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Extra places for collectstatic to find static files.
-#STATICFILES_DIRS = (
-#    os.path.join(BASE_DIR, 'static'),
-#)
+
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -207,7 +209,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Configure Django App for Heroku.
-#django_heroku.settings(locals())
+django_heroku.settings(locals())
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login'
