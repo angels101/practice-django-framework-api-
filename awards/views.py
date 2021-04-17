@@ -2,11 +2,11 @@ from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse,HttpResponseRedirect,Http404
 from .models import *
 from django.contrib.auth.models import User
-#from .forms import *
+from .forms import *
 from django.contrib.auth.decorators import login_required
 from rest_framework.response import Response
 from rest_framework.views import APIView
-#from .serializer import profileSerializer,projectSerializer
+from .serializer import profileSerializer,projectSerializer
 from django.contrib.auth import logout
 from django.contrib import messages
 # Create your views here.
