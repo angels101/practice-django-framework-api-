@@ -18,8 +18,6 @@ urlpatterns = [
     url(r'^rate/(?P<project_id>\d+)',views.rate_project, name='rate_project'),
     url(r'^api/profile/$', views.ProfileList.as_view()),
     path('api/project/',views.ProjectList.as_view()),
-    #url(r'^location/', include('location.urls')),
-    #url(r'', include('social_auth.urls')),
     
 ]
 if settings.DEBUG:

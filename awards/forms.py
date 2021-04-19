@@ -1,37 +1,49 @@
 from django import forms
-from .models import Post,Review,Profile,Rating, RATE_CHOICES
+from .models import *
+from pyuploadcare.dj.forms import ImageField
 from django.contrib.auth.models import User
 
 
- class UploadForm(forms.ModelForm):
-     class Meta:
-        model = Rating
-        fields = ('design','usability','content')
+class EditProfileForm(forms.ModelForm):
+    """
+    Form to edit user profile
+    """
+    class Meta:
+        model=User_profile
+        fields = ('bio','profile_pic','email','phone_number')
 
+class UpdateProfileForm(forms.ModelForm):
+    '''
+    Form to add user profile
+    '''
+    class Meta:
+        model = User_profile
+        fields = ('bio','profile_pic','email','phone_number')
+        
+class NewProjectForm(forms.ModelForm):
+    '''
+    Form that allows user to post new project
+    '''
+    class Meta:
+        model = Projects
+        fields = ('title','image','description','project_link') 
+        
+class ReviewForm(forms.ModelForm):
+    """
+    Form that allows user post a review for a project
+    """
+    class Meta:
+        model=Review
+        exclude = ['project','posted_by']  
+        
 class RateForm(forms.ModelForm):
-    review = forms.CharField(widget=forms.Textarea)
-    design = forms.ChoiceField(choices=RATE_CHOICES, widget=forms.Select(attrs={'placeholder': 'design'}),required=True)
-    usability = forms.ChoiceField(choices=RATE_CHOICES, widget=forms.Select(),required=True)
-    content = forms.ChoiceField(choices=RATE_CHOICES, widget=forms.Select(),required=True)
-
+    '''
+    Form that allows a user to rate a project
+    '''
     class Meta:
-        model = Review
-        fields = ('review','design','usability','content')
-
-class PostForm(forms.ModelForm):
-    class Meta:
-        model = Post
-        fields = ('image', 'title', 'url', 'description', 'category')
-
-
-class UpdateUserForm(forms.ModelForm):
-    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
-
-    class Meta:
-        model = User
-        fields = ('username', 'email')
-
-class UpdateUserProfileForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = ['name', 'photo', 'bio']
+        model=Rate
+        exclude = ['post_rated','user','date']
+        
+ 
+    
+             

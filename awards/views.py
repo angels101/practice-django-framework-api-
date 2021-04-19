@@ -6,7 +6,7 @@ from .forms import *
 from django.contrib.auth.decorators import login_required
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializer import profileSerializer,projectSerializer
+from .serializers import profileSerializer,projectSerializer
 from django.contrib.auth import logout
 from django.contrib import messages
 # Create your views here.
