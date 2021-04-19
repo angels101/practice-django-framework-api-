@@ -15,7 +15,7 @@ import django_heroku
 import dj_database_url
 from decouple import config,Csv
 from pathlib import Path
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 
 
 #import environ
