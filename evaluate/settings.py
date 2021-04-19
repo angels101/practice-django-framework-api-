@@ -16,7 +16,7 @@ import dj_database_url
 from decouple import config,Csv
 from pathlib import Path
 from dotenv import load_dotenv
-from django.utils.six import python_2_unicode_compatible
+from six
 
 
 #import environ
